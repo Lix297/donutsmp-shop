@@ -102,7 +102,7 @@ background:#d14cff;
 
 <body>
 
-<div class="cart">🛒</div>
+<div class="cart">🛒 <span id="cartCount">0</span></div>
 
 <header>
 <h1>🍩 DonutSMP Market</h1>
@@ -147,6 +147,17 @@ background:#d14cff;
 </div>
 
 </div>
+
+<script>
+let cart = 0;
+
+document.querySelectorAll(".buy").forEach(button => {
+  button.addEventListener("click", () => {
+    cart++;
+    document.getElementById("cartCount").textContent = cart;
+  });
+});
+</script>
 
 </body>
 </html>
