@@ -1,23 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>DonutSMP Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DonutSMP Market</title>
+
 <style>
 body{
+margin:0;
+font-family:Arial,sans-serif;
 background:#111;
 color:white;
-font-family:Arial;
+}
+
+header{
+background:#1b1b1b;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #bb00ff;
+}
+
+header h1{
+margin:0;
+color:#bb86fc;
+}
+
+header p{
+color:#ccc;
+}
+
+.nav{
 display:flex;
 justify-content:center;
-padding:40px;
+gap:15px;
+padding:15px;
+background:#181818;
+}
+
+.nav button{
+background:#2a2a2a;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.nav button:hover{
+background:#bb00ff;
+}
+
+.cart{
+position:absolute;
+top:20px;
+right:20px;
+font-size:24px;
 }
 
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
-max-width:1000px;
-width:100%;
+padding:30px;
+max-width:1200px;
+margin:auto;
 }
 
 .card{
@@ -25,26 +71,30 @@ background:#1f1f1f;
 padding:20px;
 border-radius:15px;
 text-align:center;
-box-shadow:0 0 15px rgba(255,0,255,0.3);
+box-shadow:0 0 15px rgba(187,0,255,0.3);
 }
 
 .price{
-color:#bb86fc;
 font-size:24px;
+color:#bb86fc;
 font-weight:bold;
 }
 
-button{
+.stock{
+color:#7fff7f;
+margin:10px 0;
+}
+
+button.buy{
 background:#bb00ff;
 color:white;
 border:none;
-padding:12px 25px;
+padding:12px 20px;
 border-radius:10px;
 cursor:pointer;
-font-size:16px;
 }
 
-button:hover{
+button.buy:hover{
 background:#d14cff;
 }
 </style>
@@ -52,30 +102,48 @@ background:#d14cff;
 
 <body>
 
+<div class="cart">🛒</div>
+
+<header>
+<h1>🍩 DonutSMP Market</h1>
+<p>Best prices on DonutSMP • Fast delivery • Trusted seller</p>
+</header>
+
+<div class="nav">
+<button>All</button>
+<button>Money</button>
+<button>Spawners</button>
+<button>Accounts</button>
+</div>
+
 <div class="container">
 
 <div class="card">
 <h2>💀 Skeleton Spawner</h2>
 <p class="price">€0.25</p>
-<button>Pirkti</button>
+<p class="stock">Stock: 10</p>
+<button class="buy">Buy</button>
 </div>
 
 <div class="card">
 <h2>💰 1M Money</h2>
 <p class="price">€0.08</p>
-<button>Pirkti</button>
+<p class="stock">Stock: 250</p>
+<button class="buy">Buy</button>
 </div>
 
 <div class="card">
 <h2>💸 10M Money</h2>
 <p class="price">€0.70</p>
-<button>Pirkti</button>
+<p class="stock">Stock: 5</p>
+<button class="buy">Buy</button>
 </div>
 
 <div class="card">
 <h2>🏦 100M Money</h2>
 <p class="price">€7.00</p>
-<button>Pirkti</button>
+<p class="stock">Stock: 2</p>
+<button class="buy">Buy</button>
 </div>
 
 </div>
