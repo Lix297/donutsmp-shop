@@ -171,7 +171,10 @@ background:#00e676;
 <h2>Checkout</h2>
 
 <p><b>Total:</b> €<span id="total">0.00</span></p>
-
+<h3>Cart Items</h3>
+<div id="cartItems">
+No items yet
+</div>
 <input type="text" id="discord" placeholder="Your Discord Username">
 
 <input type="text" id="ign" placeholder="Your DonutSMP IGN">
@@ -190,14 +193,18 @@ let total = 0;
 let items = [];
 
 function addToCart(name, price){
+
 cartCount++;
 total += price;
 items.push(name);
 
 document.getElementById("cartCount").innerText = cartCount;
 document.getElementById("total").innerText = total.toFixed(2);
-}
 
+document.getElementById("cartItems").innerHTML =
+items.join("<br>");
+
+}
 function copyOrder(){
 
 let discord =
