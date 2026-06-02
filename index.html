@@ -29,6 +29,14 @@ header p{
 color:#ccc;
 }
 
+#searchInput{
+width:300px;
+padding:10px;
+border:none;
+border-radius:8px;
+margin-top:15px;
+}
+
 .nav{
 display:flex;
 justify-content:center;
@@ -107,39 +115,41 @@ background:#d14cff;
 <header>
 <h1>🍩 DonutSMP Market</h1>
 <p>Best prices on DonutSMP • Fast delivery • Trusted seller</p>
+
+<input type="text" id="searchInput" placeholder="🔍 Search products...">
 </header>
 
 <div class="nav">
-<button>All</button>
-<button>Money</button>
-<button>Spawners</button>
-<button>Accounts</button>
+<button onclick="filterProducts('all')">All</button>
+<button onclick="filterProducts('money')">Money</button>
+<button onclick="filterProducts('spawner')">Spawners</button>
+<button onclick="filterProducts('account')">Accounts</button>
 </div>
 
 <div class="container">
 
-<div class="card">
+<div class="card" data-category="spawner">
 <h2>💀 Skeleton Spawner</h2>
 <p class="price">€0.25</p>
 <p class="stock">Stock: 10</p>
 <button class="buy">Buy</button>
 </div>
 
-<div class="card">
+<div class="card" data-category="money">
 <h2>💰 1M Money</h2>
 <p class="price">€0.08</p>
 <p class="stock">Stock: 250</p>
 <button class="buy">Buy</button>
 </div>
 
-<div class="card">
+<div class="card" data-category="money">
 <h2>💸 10M Money</h2>
 <p class="price">€0.70</p>
 <p class="stock">Stock: 5</p>
 <button class="buy">Buy</button>
 </div>
 
-<div class="card">
+<div class="card" data-category="money">
 <h2>🏦 100M Money</h2>
 <p class="price">€7.00</p>
 <p class="stock">Stock: 2</p>
@@ -155,6 +165,28 @@ document.querySelectorAll(".buy").forEach(button => {
   button.addEventListener("click", () => {
     cart++;
     document.getElementById("cartCount").textContent = cart;
+  });
+});
+
+function filterProducts(category){
+  document.querySelectorAll(".card").forEach(card => {
+    if(category === "all"){
+      card.style.display = "block";
+    } else {
+      card.style.display =
+        card.dataset.category === category ? "block" : "none";
+    }
+  });
+}
+
+document.getElementById("searchInput").addEventListener("keyup", function() {
+  let value = this.value.toLowerCase();
+
+  document.querySelectorAll(".card").forEach(card => {
+    let text = card.innerText.toLowerCase();
+
+    card.style.display =
+      text.includes(value) ? "block" : "none";
   });
 });
 </script>
