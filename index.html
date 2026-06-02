@@ -184,7 +184,17 @@ No items yet
 <button class="copyBtn" onclick="copyOrder()">
 📋 Copy Order
 </button>
+function clearCart(){
 
+cartCount = 0;
+total = 0;
+items = [];
+
+document.getElementById("cartCount").innerText = 0;
+document.getElementById("total").innerText = "0.00";
+document.getElementById("cartItems").innerHTML = "No items yet";
+
+}
 </div>
 
 <script>
