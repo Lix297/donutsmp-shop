@@ -29,40 +29,14 @@ header p{
 color:#ccc;
 }
 
-#searchInput{
-width:300px;
-padding:10px;
-border:none;
-border-radius:8px;
-margin-top:15px;
-}
-
-.nav{
-display:flex;
-justify-content:center;
-gap:15px;
-padding:15px;
-background:#181818;
-}
-
-.nav button{
-background:#2a2a2a;
-color:white;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
-}
-
-.nav button:hover{
-background:#bb00ff;
-}
-
 .cart{
-position:absolute;
-top:20px;
-right:20px;
-font-size:24px;
+position:fixed;
+top:15px;
+right:15px;
+background:#bb00ff;
+padding:10px 15px;
+border-radius:10px;
+font-weight:bold;
 }
 
 .container{
@@ -79,7 +53,7 @@ background:#1f1f1f;
 padding:20px;
 border-radius:15px;
 text-align:center;
-box-shadow:0 0 15px rgba(187,0,255,0.3);
+box-shadow:0 0 15px rgba(187,0,255,0.4);
 }
 
 .price{
@@ -93,102 +67,156 @@ color:#7fff7f;
 margin:10px 0;
 }
 
-button.buy{
+.buy{
 background:#bb00ff;
 color:white;
 border:none;
 padding:12px 20px;
 border-radius:10px;
 cursor:pointer;
+font-size:16px;
 }
 
-button.buy:hover{
+.buy:hover{
 background:#d14cff;
+}
+
+.checkout{
+max-width:700px;
+margin:40px auto;
+background:#1f1f1f;
+padding:25px;
+border-radius:15px;
+}
+
+.checkout h2{
+text-align:center;
+color:#bb86fc;
+}
+
+input, textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:15px;
+border:none;
+border-radius:8px;
+background:#2b2b2b;
+color:white;
+}
+
+.copyBtn{
+width:100%;
+background:#00c853;
+color:white;
+border:none;
+padding:15px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.copyBtn:hover{
+background:#00e676;
 }
 </style>
 </head>
 
 <body>
 
-<div class="cart">🛒 <span id="cartCount">0</span></div>
+<div class="cart">
+🛒 Cart: <span id="cartCount">0</span>
+</div>
 
 <header>
 <h1>🍩 DonutSMP Market</h1>
-<p>Best prices on DonutSMP • Fast delivery • Trusted seller</p>
-
-<input type="text" id="searchInput" placeholder="🔍 Search products...">
+<p>Seller: Lix297</p>
 </header>
-
-<div class="nav">
-<button onclick="filterProducts('all')">All</button>
-<button onclick="filterProducts('money')">Money</button>
-<button onclick="filterProducts('spawner')">Spawners</button>
-<button onclick="filterProducts('account')">Accounts</button>
-</div>
 
 <div class="container">
 
-<div class="card" data-category="spawner">
+<div class="card">
 <h2>💀 Skeleton Spawner</h2>
-<p class="price">€0.25</p>
-<p class="stock">Stock: 10</p>
-<button class="buy">Buy</button>
+<div class="price">€0.25</div>
+<div class="stock">Stock: 10</div>
+<button class="buy" onclick="addToCart('Skeleton Spawner',0.25)">Buy</button>
 </div>
 
-<div class="card" data-category="money">
+<div class="card">
 <h2>💰 1M Money</h2>
-<p class="price">€0.08</p>
-<p class="stock">Stock: 250</p>
-<button class="buy">Buy</button>
+<div class="price">€0.08</div>
+<div class="stock">Stock: 250</div>
+<button class="buy" onclick="addToCart('1M Money',0.08)">Buy</button>
 </div>
 
-<div class="card" data-category="money">
+<div class="card">
 <h2>💸 10M Money</h2>
-<p class="price">€0.70</p>
-<p class="stock">Stock: 5</p>
-<button class="buy">Buy</button>
+<div class="price">€0.70</div>
+<div class="stock">Stock: 5</div>
+<button class="buy" onclick="addToCart('10M Money',0.70)">Buy</button>
 </div>
 
-<div class="card" data-category="money">
+<div class="card">
 <h2>🏦 100M Money</h2>
-<p class="price">€7.00</p>
-<p class="stock">Stock: 2</p>
-<button class="buy">Buy</button>
+<div class="price">€7.00</div>
+<div class="stock">Stock: 2</div>
+<button class="buy" onclick="addToCart('100M Money',7.00)">Buy</button>
 </div>
+
+</div>
+
+<div class="checkout">
+
+<h2>Checkout</h2>
+
+<p><b>Total:</b> €<span id="total">0.00</span></p>
+
+<input type="text" id="discord" placeholder="Your Discord Username">
+
+<textarea id="notes" placeholder="Extra notes..."></textarea>
+
+<button class="copyBtn" onclick="copyOrder()">
+📋 Copy Order
+</button>
 
 </div>
 
 <script>
-let cart = 0;
+let cartCount = 0;
+let total = 0;
+let items = [];
 
-document.querySelectorAll(".buy").forEach(button => {
-  button.addEventListener("click", () => {
-    cart++;
-    document.getElementById("cartCount").textContent = cart;
-  });
-});
+function addToCart(name, price){
+cartCount++;
+total += price;
+items.push(name);
 
-function filterProducts(category){
-  document.querySelectorAll(".card").forEach(card => {
-    if(category === "all"){
-      card.style.display = "block";
-    } else {
-      card.style.display =
-        card.dataset.category === category ? "block" : "none";
-    }
-  });
+document.getElementById("cartCount").innerText = cartCount;
+document.getElementById("total").innerText = total.toFixed(2);
 }
 
-document.getElementById("searchInput").addEventListener("keyup", function() {
-  let value = this.value.toLowerCase();
+function copyOrder(){
 
-  document.querySelectorAll(".card").forEach(card => {
-    let text = card.innerText.toLowerCase();
+let discord =
+document.getElementById("discord").value;
 
-    card.style.display =
-      text.includes(value) ? "block" : "none";
-  });
-});
+let notes =
+document.getElementById("notes").value;
+
+let text =
+"🍩 DonutSMP Order\n\n" +
+"Buyer: " + discord + "\n\n" +
+"Items:\n" +
+items.join("\n") +
+"\n\nTotal: €" +
+total.toFixed(2) +
+"\n\nNotes: " +
+notes;
+
+navigator.clipboard.writeText(text);
+
+alert("Order copied!");
+}
 </script>
 
 </body>
