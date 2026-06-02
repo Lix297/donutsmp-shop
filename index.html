@@ -103,6 +103,7 @@ border:none;
 border-radius:8px;
 background:#2b2b2b;
 color:white;
+box-sizing:border-box;
 }
 
 .copyBtn{
@@ -173,6 +174,8 @@ background:#00e676;
 
 <input type="text" id="discord" placeholder="Your Discord Username">
 
+<input type="text" id="ign" placeholder="Your DonutSMP IGN">
+
 <textarea id="notes" placeholder="Extra notes..."></textarea>
 
 <button class="copyBtn" onclick="copyOrder()">
@@ -200,12 +203,16 @@ function copyOrder(){
 let discord =
 document.getElementById("discord").value;
 
+let ign =
+document.getElementById("ign").value;
+
 let notes =
 document.getElementById("notes").value;
 
 let text =
 "🍩 DonutSMP Order\n\n" +
-"Buyer: " + discord + "\n\n" +
+"Buyer: " + discord + "\n" +
+"IGN: " + ign + "\n\n" +
 "Items:\n" +
 items.join("\n") +
 "\n\nTotal: €" +
