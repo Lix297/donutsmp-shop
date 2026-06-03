@@ -200,21 +200,42 @@ document.getElementById("cartItems").innerHTML = "No items yet";
 <script>
 let cartCount = 0;
 let total = 0;
-let items = [];
+let items = {};
 
 function addToCart(name, price){
 
 cartCount++;
 total += price;
-items.push(name);
+
+if(items[name]){
+items[name]++;
+}else{
+items[name] = 1;
+}
 
 document.getElementById("cartCount").innerText = cartCount;
 document.getElementById("total").innerText = total.toFixed(2);
 
-document.getElementById("cartItems").innerHTML =
-items.join("<br>");
+let output = "";
 
+for(let item in items){
+output += item + " x" + items[item] + "<br>";
 }
+
+document.getElementById("cartItems").innerHTML = output;
+}
+
+function clearCart(){
+
+cartCount = 0;
+total = 0;
+items = {};
+
+document.getElementById("cartCount").innerText = 0;
+document.getElementById("total").innerText = "0.00";
+document.getElementById("cartItems").innerHTML = "No items yet";
+}
+
 function copyOrder(){
 
 let discord =
@@ -226,13 +247,19 @@ document.getElementById("ign").value;
 let notes =
 document.getElementById("notes").value;
 
+let itemList = "";
+
+for(let item in items){
+itemList += item + " x" + items[item] + "\n";
+}
+
 let text =
 "🍩 DonutSMP Order\n\n" +
 "Buyer: " + discord + "\n" +
 "IGN: " + ign + "\n\n" +
 "Items:\n" +
-items.join("\n") +
-"\n\nTotal: €" +
+itemList +
+"\nTotal: €" +
 total.toFixed(2) +
 "\n\nNotes: " +
 notes;
