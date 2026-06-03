@@ -9,7 +9,7 @@
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:#111;
+background:linear-gradient(135deg,#0f0f0f,#1a0033);
 color:white;
 }
 
@@ -25,10 +25,6 @@ margin:0;
 color:#bb86fc;
 }
 
-header p{
-color:#ccc;
-}
-
 .cart{
 position:fixed;
 top:15px;
@@ -37,6 +33,7 @@ background:#bb00ff;
 padding:10px 15px;
 border-radius:10px;
 font-weight:bold;
+z-index:999;
 }
 
 .container{
@@ -53,7 +50,19 @@ background:#1f1f1f;
 padding:20px;
 border-radius:15px;
 text-align:center;
-box-shadow:0 0 15px rgba(187,0,255,0.4);
+box-shadow:0 0 25px rgba(187,0,255,0.6);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 35px rgba(187,0,255,0.9);
+}
+
+.card img{
+width:90px;
+height:90px;
+object-fit:contain;
 }
 
 .price{
@@ -94,7 +103,7 @@ text-align:center;
 color:#bb86fc;
 }
 
-input, textarea{
+input,textarea{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -115,10 +124,40 @@ padding:15px;
 border-radius:10px;
 font-size:16px;
 cursor:pointer;
+margin-top:10px;
 }
 
 .copyBtn:hover{
 background:#00e676;
+}
+
+.clearBtn{
+width:100%;
+background:#ff1744;
+color:white;
+border:none;
+padding:15px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.clearBtn:hover{
+background:#ff4569;
+}
+
+.reviews{
+max-width:700px;
+margin:40px auto;
+background:#1f1f1f;
+padding:25px;
+border-radius:15px;
+}
+
+.reviews h2{
+color:#bb86fc;
+text-align:center;
 }
 </style>
 </head>
@@ -131,12 +170,13 @@ background:#00e676;
 
 <header>
 <h1>🍩 DonutSMP Market</h1>
-
+<p>Fast Delivery • Trusted Seller</p>
 </header>
 
 <div class="container">
 
 <div class="card">
+<img src="https://minecraft.wiki/images/Skeleton_Skull_JE2_BE2.png">
 <h2>💀 Skeleton Spawner</h2>
 <div class="price">€0.25</div>
 <div class="stock">Stock: 10</div>
@@ -144,6 +184,7 @@ background:#00e676;
 </div>
 
 <div class="card">
+<img src="https://minecraft.wiki/images/Gold_Ingot_JE4_BE2.png">
 <h2>💰 1M Money</h2>
 <div class="price">€0.08</div>
 <div class="stock">Stock: 250</div>
@@ -151,6 +192,7 @@ background:#00e676;
 </div>
 
 <div class="card">
+<img src="https://minecraft.wiki/images/Gold_Ingot_JE4_BE2.png">
 <h2>💸 10M Money</h2>
 <div class="price">€0.70</div>
 <div class="stock">Stock: 5</div>
@@ -158,6 +200,7 @@ background:#00e676;
 </div>
 
 <div class="card">
+<img src="https://minecraft.wiki/images/Gold_Ingot_JE4_BE2.png">
 <h2>🏦 100M Money</h2>
 <div class="price">€7.00</div>
 <div class="stock">Stock: 2</div>
@@ -171,10 +214,13 @@ background:#00e676;
 <h2>Checkout</h2>
 
 <p><b>Total:</b> €<span id="total">0.00</span></p>
+
 <h3>Cart Items</h3>
+
 <div id="cartItems">
 No items yet
 </div>
+
 <input type="text" id="discord" placeholder="Your Discord Username">
 
 <input type="text" id="ign" placeholder="Your DonutSMP IGN">
@@ -183,29 +229,29 @@ No items yet
 
 <button class="copyBtn" onclick="copyOrder()">
 📋 Copy Order
-  <button class="copyBtn" onclick="clearCart()">
+</button>
+
+<button class="clearBtn" onclick="clearCart()">
 🗑️ Clear Cart
 </button>
-</button>
-function clearCart(){
 
-cartCount = 0;
-total = 0;
-items = [];
+</div>
 
-document.getElementById("cartCount").innerText = 0;
-document.getElementById("total").innerText = "0.00";
-document.getElementById("cartItems").innerHTML = "No items yet";
+<div class="reviews">
+<h2>⭐ Reviews</h2>
 
-}
+<p>⭐⭐⭐⭐⭐ Fast delivery!</p>
+<p>⭐⭐⭐⭐⭐ Trusted seller!</p>
+<p>⭐⭐⭐⭐⭐ Cheap prices!</p>
 </div>
 
 <script>
+
 let cartCount = 0;
 let total = 0;
 let items = {};
 
-function addToCart(name, price){
+function addToCart(name,price){
 
 cartCount++;
 total += price;
@@ -237,18 +283,14 @@ items = {};
 document.getElementById("cartCount").innerText = 0;
 document.getElementById("total").innerText = "0.00";
 document.getElementById("cartItems").innerHTML = "No items yet";
+
 }
 
 function copyOrder(){
 
-let discord =
-document.getElementById("discord").value;
-
-let ign =
-document.getElementById("ign").value;
-
-let notes =
-document.getElementById("notes").value;
+let discord = document.getElementById("discord").value;
+let ign = document.getElementById("ign").value;
+let notes = document.getElementById("notes").value;
 
 let itemList = "";
 
@@ -258,7 +300,7 @@ itemList += item + " x" + items[item] + "\n";
 
 let text =
 "🍩 DonutSMP Order\n\n" +
-"Buyer: " + discord + "\n" +
+"Discord: " + discord + "\n" +
 "IGN: " + ign + "\n\n" +
 "Items:\n" +
 itemList +
@@ -271,14 +313,8 @@ navigator.clipboard.writeText(text);
 
 alert("Order copied!");
 }
+
 </script>
-<div style="max-width:700px;margin:40px auto;background:#1f1f1f;padding:25px;border-radius:15px;">
-<h2 style="color:#bb86fc;text-align:center;">⭐ Reviews</h2>
 
-<p>⭐⭐⭐⭐⭐ Fast delivery!</p>
-<p>⭐⭐⭐⭐⭐ Trusted seller!</p>
-<p>⭐⭐⭐⭐⭐ Cheap prices!</p>
-
-</div>
 </body>
 </html>
