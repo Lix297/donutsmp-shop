@@ -232,8 +232,8 @@ No items yet
 
 <textarea id="notes" placeholder="Extra notes..."></textarea>
 
-<button class="copyBtn" onclick="copyOrder()">
-📋 Copy Order
+<button class="copyBtn" onclick="payNow()">
+💳 Pay with PayPal
 </button>
 
 <button class="clearBtn" onclick="clearCart()">
@@ -326,6 +326,16 @@ alert("Order copied!");
 }
 
 </script>
+  function payNow(){
+
+copyOrder();
+
+window.open(
+"https://paypal.me/TavoPayPalVardas/" + total.toFixed(2),
+"_blank"
+);
+
+} 
 
 </body>
 </html>
